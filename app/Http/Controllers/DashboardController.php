@@ -14,10 +14,10 @@ class DashboardController extends Controller
     public function dashboard()
     {
         // dd('dashboard index');
-
+        $users = User::where('role_id', 2)->get();
         $bookcount = Book::count();
         $categorycount = Category::count();
-        $usercount = User::count();
+        $usercount = User::where('role_id', 2)->count();
         $rentlogs = RentLogs::with(['user', 'book'])->get();
         return view('dashboard', ['book_count' => $bookcount, 'category_count' => $categorycount, 'user_count' => $usercount, 'rent_logs' => $rentlogs]);
     }
