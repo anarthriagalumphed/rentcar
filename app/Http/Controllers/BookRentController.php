@@ -25,36 +25,37 @@ class BookRentController extends Controller
 
     public function store(Request $request)
     {
-        // Mengambil tanggal peminjaman dan pengembalian dari input
-        $rentDate = $request->input('rent_date');
-        $returnDate = $request->input('return_date');
-
-        // Memastikan bahwa tanggal yang dimasukkan sesuai dengan kebutuhan atau validasi tambahan
-        // Anda mungkin ingin menambahkan validasi tanggal di sini
-
         try {
             DB::beginTransaction();
 
-            // Setelah mengambil tanggal, Anda dapat menggunakan variabel ini
-            // dalam proses berikutnya
+            // Memastikan setidaknya satu buku dipilih
+            $bookIds = $request->input('book_ids');
+            if (empty($bookIds)) {
+                Session::flash('message', 'Pilih setidaknya satu buku.');
+                Session::flash('alert-class', 'alert-danger');
+                return redirect('book_rent');
+            }
 
-            //proses insert ke rent log table//
-            RentLogs::create([
-                'user_id' => $request->user_id,
-                'book_id' => $request->book_id,
-                'rent_date' => $rentDate,
-                'return_date' => $returnDate,
-                // tambahkan kolom lainnya
-            ]);
+            // Proses setiap buku yang dipilih
+            foreach ($bookIds as $bookId) {
+                //proses insert ke rent log table//
+                RentLogs::create([
+                    'user_id' => $request->user_id,
+                    'book_id' => $bookId,
+                    'rent_date' => $request->rent_date,
+                    'return_date' => $request->return_date,
+                    // tambahkan kolom lainnya
+                ]);
 
-            //proses update ke book table//
-            $book = Book::findOrFail($request->book_id);
-            $book->status = 'not available';
-            $book->save();
+                //proses update ke book table//
+                $book = Book::findOrFail($bookId);
+                $book->status = 'not available';
+                $book->save();
+            }
 
             DB::commit();
 
-            Session::flash('message', 'Book Available');
+            Session::flash('message', 'Buku berhasil dipinjam.');
             Session::flash('alert-class', 'alert-success');
             return redirect('rent_logs');
         } catch (\Throwable $th) {
@@ -64,6 +65,7 @@ class BookRentController extends Controller
             return redirect('book_rent');
         }
     }
+
 
 
     public function book_return()
@@ -76,26 +78,40 @@ class BookRentController extends Controller
 
     public function returning(Request $request)
     {
-        $rent = RentLogs::where('user_id', $request->user_id)->where('book_id', $request->book_id)->where('actual_return_date', null);
-        $rentData = $rent->first();
-        $countData = $rent->count();
-        if ($countData == 1) {
-            $rentData->actual_return_date = Carbon::now()->toDateString();
-            $rentData->save();
+        // Mengambil book_ids dari input
+        $bookIds = $request->input('book_ids');
 
-            $book = Book::findOrFail($request->book_id);
-            $book->status = 'in stock';
-            $book->save();
-
-            Session::flash('message', 'Book Returned');
-            Session::flash('alert-class', 'alert-success');
-            return redirect('book_return');
-        } else {
-            Session::flash('message', 'Book Not Returned');
+        // Memastikan setidaknya satu buku dipilih
+        if (empty($bookIds)) {
+            Session::flash('message', 'Pilih setidaknya satu buku untuk pengembalian.');
             Session::flash('alert-class', 'alert-danger');
             return redirect('book_return');
         }
+
+        // Mengupdate RentLogs dan status buku untuk setiap buku yang dipilih
+        foreach ($bookIds as $bookId) {
+            $rent = RentLogs::where('user_id', $request->user_id)->where('book_id', $bookId)->where('actual_return_date', null);
+            $rentData = $rent->first();
+            $countData = $rent->count();
+
+            if ($countData == 1) {
+                $rentData->actual_return_date = Carbon::now()->toDateString();
+                $rentData->save();
+
+                $book = Book::findOrFail($bookId);
+                $book->status = 'in stock';
+                $book->save();
+            } else {
+                // Handle jika data tidak ditemukan atau kondisi lainnya
+                // Anda bisa menambahkan Session::flash atau tindakan lain sesuai kebutuhan
+            }
+        }
+
+        Session::flash('message', 'Buku berhasil dikembalikan.');
+        Session::flash('alert-class', 'alert-success');
+        return redirect('book_return');
     }
+
 
     public function selectState(Request $request)
     {
@@ -121,4 +137,11 @@ class BookRentController extends Controller
 
         return response()->json($books);
     }
+
+
+    // ini adalah kode terakhir yang work
+
+
+
+
 }

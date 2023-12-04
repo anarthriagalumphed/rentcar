@@ -48,8 +48,8 @@
 
                                 <div class="form-group">
                                     <label for="inputbook">Book</label>
-                                    <select name="book_id" type="book" class="form-control select2-multiple"
-                                        multiple="multiple" id="inputbook" placeholder="Enter Book Title">
+                                    <select name="book_ids[]" class="form-control select2-multiple" multiple="multiple"
+                                        id="inputbook" placeholder="Enter Book Title">
                                         <option value="" disabled>Select Book</option>
                                         @foreach ($books as $item)
                                             <option value="{{ $item->id }}">{{ $item->book_code }} | {{ $item->title }}
@@ -57,6 +57,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="rent_date">Rent Date</label>
                                     <input type="date" name="rent_date" class="form-control" required>
@@ -77,12 +78,13 @@
             </div>
         </div>
     </section>
-
+{{-- ini adalah kode terakhir yang work --}}
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // Script untuk pemilihan kategori dan mendapatkan buku berdasarkan kategori
         $(document).ready(function() {
+            // Inisialisasi Select2 pada dokumen dimuat
             $('.userbox').select2();
 
             // Event ketika kategori berubah
@@ -94,17 +96,22 @@
                     url: '/books-by-category/' + categoryID,
                     type: 'GET',
                     success: function(data) {
-                        // Menghapus opsi buku yang ada
-                        $('#inputbook').empty();
+                        // Simpan referensi ke elemen inputbook
+                        var inputBook = $('#inputbook');
 
-                        // Menambahkan opsi buku baru berdasarkan data yang diterima
+                        // Hancurkan dan hapus Select2 pada elemen inputbook
+                        inputBook.select2('destroy').empty();
+
+                        // Tambahkan opsi buku baru berdasarkan data yang diterima
                         $.each(data, function(index, book) {
-                            $('#inputbook').append('<option value="' + book.id + '">' +
+                            inputBook.append('<option value="' + book.id + '">' +
                                 book.book_code + ' | ' + book.title + '</option>');
                         });
 
-                        // Refresh Select2 setelah memperbarui pilihan
-                        $('#inputbook').trigger('change');
+                        // Inisialisasi kembali Select2 pada elemen inputbook dengan opsi ganda
+                        inputBook.select2({
+                            multiple: true
+                        });
                     },
                     error: function(error) {
                         console.error('Error fetching books:', error);

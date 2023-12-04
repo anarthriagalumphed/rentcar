@@ -102,6 +102,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/books-by-category/{categoryID}', [BookController::class, 'getBooksByCategory']);
 
+        // routes/web.php
+
+        Route::post('/admin/books-by-multiple-categories', [BookRentController::class, 'getBooksByMultipleCategories'])
+            ->name('admin.books-by-multiple-categories');
 
 
         Route::get('rent_logs', [Rent_LogsController::class, 'rent_logs'])->name('rent_logs');
