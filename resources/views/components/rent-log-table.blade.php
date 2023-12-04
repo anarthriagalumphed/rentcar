@@ -10,10 +10,10 @@
             <tr>
                 <th>No</th>
                 <th>User</th>
-                <th>Book</th>
+                <th>Cars</th>
                 <th>Rent Date</th>
                 <th>Return Date</th>
-                <th>Actual Return Date</th>
+                {{-- <th>Action</th> --}}
                 {{-- <th></th> --}}
             </tr>
 
@@ -42,7 +42,7 @@
                         </td>
                         <td>{{ $item->rent_date }}</td>
                         <td>{{ $item->return_date }}</td>
-                        <td>{{ $item->actual_return_date }}</td>
+                        {{-- <td></td> --}}
                     </tr>
                 @endforeach
 

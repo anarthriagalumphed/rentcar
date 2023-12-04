@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('template/dist/css/adminlte.min.css') }}">
     <link
         href="{{ asset('template/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -136,11 +136,11 @@
                                     class="nav-link {{ request()->is('books') ? 'active' : '' }} || {{ request()->is('add_books') ? 'active' : '' }} || {{ request()->is('edit_books') ? 'active' : '' }} || {{ request()->is('delete_books') ? 'active' : '' }} || {{ request()->is('deleted_books') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-swatchbook "></i>
                                     <p>
-                                        Books
+                                        Car Data
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="/categories"
                                     class="nav-link {{ request()->is('categories') ? 'active' : '' }} || {{ request()->is('add_category') ? 'active' : '' }} || {{ request()->is('edit_category') ? 'active' : '' }} || {{ request()->is('delete_category') ? 'active' : '' }} || {{ request()->is('deleted_category') ? 'active' : '' }}">
                                     <i class="nav-icon  	fas fa-book "></i>
@@ -148,30 +148,30 @@
                                         Categories
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="/users" class="nav-link {{ request()->is('users') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-users "></i>
                                     <p>
-                                        Users
+                                        User
                                     </p>
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a href="/book_rent"
-                                    class="nav-link {{ request()->is('book_rent') ? 'active' : '' }}">
-                                    <i class='fas fa-money-bill-wave-alt '></i>
+                                <a href="/book_rent" class="nav-link {{ request()->is('book_rent') ? 'active' : '' }}">
+                                    <i class='nav-icon fas fa-money-bill-wave-alt '></i>
                                     <p>
-                                        Book Rent
+                                        Car rental
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="/book_return"
                                     class="nav-link {{ request()->is('book_return') ? 'active' : '' }}">
-                                    <i class='fas fa-arrow-alt-circle-left '></i>
+                                    <i class=' nav-icon fas fa-arrow-alt-circle-left '></i>
                                     <p>
-                                        Book Return
+                                        Return Date
                                     </p>
                                 </a>
                             </li>

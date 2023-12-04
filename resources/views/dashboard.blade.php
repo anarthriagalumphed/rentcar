@@ -13,7 +13,7 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $book_count }}</h3>
-                    <p>Books</p>
+                    <p>Car</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-swatchbook"></i>

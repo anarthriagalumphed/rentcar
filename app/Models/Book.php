@@ -15,7 +15,7 @@ class Book extends Model
     use Sluggable;
     use SoftDeletes;
     // protected $table = 'books';
-    protected $fillable = ['book_code', 'title', 'cover', 'slug'];
+    protected $fillable = ['book_code', 'title', 'cover', 'slug', 'tahun_keluar', 'price'];
 
 
 
@@ -38,5 +38,10 @@ class Book extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
+    }
+    // Di dalam model Book
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

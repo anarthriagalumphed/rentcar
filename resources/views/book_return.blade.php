@@ -1,6 +1,6 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Book Return')
+@section('title', 'Car Return')
 
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -44,10 +44,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputbook">Book</label>
+                                    <label for="inputbook">Car</label>
                                     <select name="book_id" type="book" class="form-control select2-multiple"
                                         multiple="multiple" id="inputbook" placeholder="Enter Book Title">
-                                        <option value="" disabled>Select Book</option>
+                                        <option value="" disabled>Select Car</option>
                                     </select>
                                 </div>
                             </div>

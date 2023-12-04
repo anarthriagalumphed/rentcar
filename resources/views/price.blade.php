@@ -1,6 +1,6 @@
-@extends('layouts.mainlayout')
+{{-- @extends('layouts.mainlayout')
 
-@section('title', 'Categories')
+@section('title', 'Price')
 
 
 @section('content')
@@ -19,24 +19,10 @@
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
 
-
-                {{-- <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div> --}}
                 <br>
-                <a href="add_category" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
-                        class="fas fa-plus"></i>
-                    Add
-                    Category</a>
-                <a href="deleted_category" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
+                <a href="add_price" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i class="fas fa-plus"></i>
+                    Add price</a>
+                <a href="deleted_price" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
                         class="fas fa-history"></i>
                     View Deleted
                     Data</a>
@@ -51,10 +37,10 @@
 
                 <!-- ini perlu diganti -->
                 <tbody>
-                    @foreach ($category as $item)
+                    @foreach ($books as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->title }}</td>
                             <td>
                                 <a href="edit_category/{{ $item->slug }}" class="btn btn-warning btn-sm"
                                     title="edit category"><i class="fas fa-edit"></i></a>
@@ -71,4 +57,4 @@
         </div>
     </div>
 
-@endsection
+@endsection --}}

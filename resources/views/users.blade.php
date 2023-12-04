@@ -32,10 +32,13 @@
                 <br>
                 <a href="/deleted_users" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i class=""></i>
                     View Banned Users</a>
-                {{-- <a href="/registered_users" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
-                        class="fas fa-history"></i>
-                    View Registered
-                    User</a> --}}
+                <a href="/add_users" class="btn btn-success btn-sm mb-2" style="margin-right: 10px;"><i
+                        class="fas fa-plus"></i>
+                    Tambah
+                    User</a>
+                {{-- <a href="/edit_users" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
+                        class="fas fa-pen"></i>
+                    Edit User</a> --}}
                 <br>
                 <tr>
                     <th>No.</th>
@@ -53,16 +56,10 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->username }}</td>
                             <td>
-                                @if ($item->phone)
-                                    {{ $item->phone }}
-                                @else
-                                    -
-                                @endif
-
-
-
-                            </td>
+                                {{ $item->phone }} </td>
                             <td>
+                                <a href="edit_users/{{ $item->slug }}" class="btn btn-primary btn-sm"><i
+                                        title="view detail user"class="	fas fa-address-card"></i></a>
                                 <a href="detail_users/{{ $item->slug }}" class="btn btn-warning btn-sm"><i
                                         title="view detail user"class="	fas fa-address-card"></i></a>
                                 <a href="delete_users/{{ $item->slug }}" class="btn btn-danger btn-sm"><i

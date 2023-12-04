@@ -73,6 +73,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get('users', [UsersController::class, 'users']);
 
+
+        Route::get('add_users', [UsersController::class, 'add_users']);
+        Route::post('add_users', [UsersController::class, 'store']);
+        Route::get('edit_users/{slug}', [UsersController::class, 'edit_users']);
+        Route::put('edit_users/{slug}', [UsersController::class, 'update_users']);
         Route::get('registered_users', [UsersController::class, 'registered_users']);
         Route::get('detail_users/{slug}', [UsersController::class, 'detail_users']);
         Route::get('approve_users/{slug}', [UsersController::class, 'approve_users']);
@@ -81,17 +86,21 @@ Route::middleware('auth')->group(function () {
         Route::get('deleted_users', [UsersController::class, 'deleted_users']);
         Route::get('restore_users/{slug}', [UsersController::class, 'restore_users']);
 
-        Route::get('book_rent', [BookRentController::class, 'book_rent']);
+        Route::get('book_rent', [BookRentController::class, 'book_rent'])->name('book_rent');
         Route::post('book_rent', [BookRentController::class, 'store']);
 
 
 
+        Route::get('price', [BookController::class, 'price']);
+        Route::get('add_price', [BookController::class, 'add_price']);
+        Route::post('add_price', [BookController::class, 'store_price']);
 
         Route::get('book_return', [BookRentController::class, 'book_return']);
         Route::post('book_return', [BookRentController::class, 'returning']);
 
         Route::get('/admin/select-state', [BookRentController::class, 'selectState'])->name('admin.selectState');
 
+        Route::get('/books-by-category/{categoryID}', [BookController::class, 'getBooksByCategory']);
 
 
 

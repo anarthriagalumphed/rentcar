@@ -35,14 +35,14 @@ class UsersController extends Controller
 
 
 
-    public function approve_users($slug)
-    {
+    // public function approve_users($slug)
+    // {
 
-        $user = User::where('slug', $slug)->first();
-        $user->status = 'active';
-        $user->save();
-        return redirect('/detail_users/' . $slug)->with('status', 'user active');
-    }
+    //     $user = User::where('slug', $slug)->first();
+    //     $user->status = 'active';
+    //     $user->save();
+    //     return redirect('/detail_users/' . $slug)->with('status', 'user active');
+    // }
 
     public function delete_users($slug)
     {
@@ -74,5 +74,77 @@ class UsersController extends Controller
         $category = User::withTrashed()->where('slug', $slug)->first();
         $category->restore();
         return redirect('users')->with('status', 'Users Unbanned');
+    }
+
+
+
+
+    public function add_users()
+    {
+        $user = User::all();
+        return view('add_users', ['users' => $user]);
+    }
+
+
+    public function store(Request $request)
+    {
+        //tabel yang mau diisi
+        $validated = $request->validate([
+            'username' => 'max:100',
+            'nik' => 'max:16',
+            'phone' => 'max:16'
+        ]);
+
+
+        $user = User::create($request->all());
+        return redirect('users')->with('status', 'user added');
+    }
+
+
+
+    public function edit_users($slug)
+    {
+        $user = User::where('slug', $slug)->first();
+        return view('edit_users', ['user' => $user]);
+    }
+
+
+
+
+
+
+
+    public function update_users(Request $request, $slug)
+    {
+        $user = User::where('slug', $slug)->first();
+
+        // Validasi hanya jika ada perubahan pada username, nik, atau phone
+        $validationRules = [
+            'username' => 'max:100',
+            'nik' => 'max:16',
+            'phone' => 'max:16',
+        ];
+
+        // Periksa apakah ada perubahan pada username
+        if ($request->username != $user->username) {
+            $validationRules['username'] .= '|unique:users';
+        }
+
+        // Periksa apakah ada perubahan pada nik
+        if ($request->nik != $user->nik) {
+            $validationRules['nik'] .= '|unique:users';
+        }
+
+        // Periksa apakah ada perubahan pada phone
+        if ($request->phone != $user->phone) {
+            $validationRules['phone'] .= '|unique:users';
+        }
+
+        $validated = $request->validate($validationRules);
+
+        $user->slug = null;
+        $user->update($request->all());
+
+        return redirect('users')->with('status', 'user updated');
     }
 }

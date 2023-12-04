@@ -1,26 +1,19 @@
 @extends('layouts.mainlayout')
 
 
-@section('title', 'Add Category')
+@section('title', 'Edit user')
 
 
 @section('content')
-
-
-
-
-
     <div>
-
-
-
-        <form action="add_category" method="post">
+        <form action="/edit_users/{{ $user->slug }}" method="post">
 
 
             @csrf
-            <a href="/categories" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
+            <a href="/users" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
                 class="fas fa-arrow-left"></i>
             Back</a>
+            @method('put')
             <div class="form-group mt-5 w-50 " style="margin: auto;">
                 @if ($errors->any())
 
@@ -34,10 +27,13 @@
                 @endif
                 <label>Name</label>
 
-                <input type="text" name="name" placeholder="insert name" class="form-control">
+                <input value="{{ $user->username }}" type="text" name="username" class="form-control">
+                <label>Phone</label>
+
+                <input value="{{ $user->phone }}" type="text" name="phone" class="form-control">
                 <div class="text-small text-danger"></div>
                 <br>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"> Save</i> </button>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"> Update</i> </button>
             </div>
 
 

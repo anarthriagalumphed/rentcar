@@ -1,6 +1,6 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Books')
+@section('title', 'Cars')
 
 
 @section('content')
@@ -33,8 +33,8 @@
                 </div>
                 <br> --}}
                 <a href="add_books" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i class="fas fa-plus"></i>
-                    Tambah
-                    Books</a>
+                    Add
+                    Cars</a>
                 <a href="deleted_books" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
                         class="fas fa-history"></i>
                     View Deleted
@@ -43,8 +43,11 @@
                 <tr>
                     <th>No.</th>
                     <th>Code</th>
+
                     <th>Title</th>
+                    <th>Year</th>
                     <th>Category</th>
+                    <th>Harga</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -58,15 +61,19 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->book_code }}</td>
                             <td>{{ $item->title }}</td>
+                            <td>{{ $item->tahun_keluar }}</td>
                             <td>
                                 @foreach ($item->categories as $category)
                                     {{ $category->name }}<br>
                                 @endforeach
                             </td>
+                            <td>{{ 'Rp ' . number_format($item->price, 0, ',', '.') }}</td>
                             <td>{{ $item->status }}</td>
                             <td>
                                 <a href="/edit_books/{{ $item->slug }}" title="edit book"
                                     class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                <a href="/detail_books/{{ $item->slug }}" class="btn btn-warning btn-sm"><i
+                                        title="view detail car"class="	fas fa-address-card"></i></a>
                                 <a href="/delete_books/{{ $item->slug }}" title="delete book"
                                     class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
 

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,13 +21,14 @@ class CategorySeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $data = [
-            'comic',  'novel', 'fantasy', 'fiction', 'mystery', 'horror', 'romance', 'western'
+            'Manual',  'Matic',
         ];
 
 
         foreach ($data as $value) {
             Category::insert([
-                'name' => $value
+                'name' => $value,
+                'slug' => Str::slug($value)
             ]);
         }
     }

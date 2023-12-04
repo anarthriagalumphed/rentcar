@@ -20,6 +20,9 @@
             @endif
 
             @csrf
+            <a href="/users" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
+                class="fas fa-arrow-left"></i>
+            Back</a>
             <div class="form-group mt-5 w-25 ">
                 @if ($errors->any())
                     <div class="alert alert-danger">

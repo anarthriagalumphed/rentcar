@@ -37,6 +37,16 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="inputcategory">Category</label>
+                                    <select name="category_id" class="form-control" id="inputcategory" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="inputbook">Book</label>
                                     <select name="book_id" type="book" class="form-control select2-multiple"
                                         multiple="multiple" id="inputbook" placeholder="Enter Book Title">
@@ -46,6 +56,14 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rent_date">Rent Date</label>
+                                    <input type="date" name="rent_date" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="return_date">Return Date</label>
+                                    <input type="date" name="return_date" class="form-control" required>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -63,8 +81,36 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        // Script untuk pemilihan kategori dan mendapatkan buku berdasarkan kategori
         $(document).ready(function() {
             $('.userbox').select2();
+
+            // Event ketika kategori berubah
+            $('#inputcategory').change(function() {
+                var categoryID = $(this).val();
+
+                // Memanggil endpoint untuk mendapatkan buku berdasarkan kategori
+                $.ajax({
+                    url: '/books-by-category/' + categoryID,
+                    type: 'GET',
+                    success: function(data) {
+                        // Menghapus opsi buku yang ada
+                        $('#inputbook').empty();
+
+                        // Menambahkan opsi buku baru berdasarkan data yang diterima
+                        $.each(data, function(index, book) {
+                            $('#inputbook').append('<option value="' + book.id + '">' +
+                                book.book_code + ' | ' + book.title + '</option>');
+                        });
+
+                        // Refresh Select2 setelah memperbarui pilihan
+                        $('#inputbook').trigger('change');
+                    },
+                    error: function(error) {
+                        console.error('Error fetching books:', error);
+                    }
+                });
+            });
         });
     </script>
 @endsection

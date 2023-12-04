@@ -46,15 +46,25 @@ class CategoriesController extends Controller
 
 
 
-
     public function update_category(Request $request, $slug)
     {
-        $validated = $request->validate([
-            'name' => 'required|unique:categories|max:100',
-        ]);
         $category = Category::where('slug', $slug)->first();
+
+        // Validasi hanya jika ada perubahan pada nama
+        $validationRules = [
+            'name' => 'required|max:100',
+        ];
+
+        // Periksa apakah ada perubahan pada nama
+        if ($request->name != $category->name) {
+            $validationRules['name'] .= '|unique:categories';
+        }
+
+        $validated = $request->validate($validationRules);
+
         $category->slug = null;
         $category->update($request->all());
+
         return redirect('categories')->with('status', 'category updated');
     }
 
