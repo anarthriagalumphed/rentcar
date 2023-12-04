@@ -9,15 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+
+    // ini migration untuk admin, dan serta untuk data pelanggan
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone')->nullable();
-            $table->text('address')->nullable();
+            $table->string('username'); //nama
+            $table->string('email')->unique()->nullable();
+            $table->string('password')->nullable();
+            $table->string('nik')->nullable();
+            $table->string('phone')->nullable(); //no tlp
+            $table->text('address')->nullable(); //alamat jika perlu
+
+            //nik nama no hp
+
+
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('status')->default('active');

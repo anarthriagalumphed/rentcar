@@ -131,4 +131,14 @@ class BookController extends Controller
         $book->restore();
         return redirect('books')->with('status', 'book restored');
     }
+
+    public function getBooksByCategory(Request $request, $categoryID)
+    {
+        // Ambil hanya buku dengan status "available"
+        $books = Book::whereHas('categories', function ($query) use ($categoryID) {
+            $query->where('categories.id', $categoryID);
+        })->where('status', 'in stock')->get();
+
+        return response()->json($books);
+    }
 }

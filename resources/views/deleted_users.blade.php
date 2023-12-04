@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <br>
-                <a href="/categories" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
+                <a href="/users" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
                         class="fas fa-arrow-left"></i>
                     Back</a>
                 {{-- <a href="deleted_category" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
