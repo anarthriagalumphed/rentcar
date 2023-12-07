@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Library | @yield('title')</title>
-    <link rel="icon" type="image/png" href="{{ asset('img/logo_jadi.png') }}">
+    <title>Palawa | @yield('title')</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/palawa-icon-colored.png') }}">
     <!-- Google Font: Source Sans Pro -->
 
     <link rel="stylesheet"
@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="{{ asset('template/dist/css/adminlte.min.css') }}">
     <link
         href="{{ asset('template/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous') }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Dapatkan dari https://fontawesome.com/start -->
+    <script src="https://kit.fontawesome.com/2877f6b29f.js" crossorigin="anonymous"></script>
 </head>
 
 
@@ -31,10 +33,16 @@
 
         <!-- Preloader -->
 
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="{{ asset('img/logo_jadi.png') }}" alt="AdminLTELogo" height="60"
-                width="60">
-        </div> --}}
+        @if (session('just_logged_in'))
+            <div class="preloader flex-column justify-content-center align-items-center">
+                <img class="animation__wobble" src="{{ asset('img/palawa-icon-colored.png') }}" alt="Logo"
+                    height="150" width="150">
+            </div>
+            @php
+                // Hapus variabel sesi setelah menampilkan preloader
+                session()->forget('just_logged_in');
+            @endphp
+        @endif
 
         <nav class="main-header navbar navbar-expand navbar-dark">
             <!-- Left navbar links -->
@@ -47,19 +55,22 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="dashboard" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
+                {{-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="mailto:galih22.mp@gmail.com" class="nav-link">Contact</a>
-                </li>
+                </li> --}}
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
                 <div class="sidebar-overlay">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                            <i class="fas fa-search"style="margin-right: 15px;"></i>
+                        <a chref="#" class="nav-link" id="logoutButton">
+                            <i class="nav-icon fas fa-sign-out-alt"> Logout</i>
                         </a>
-                        <div class="navbar-search-block">
+
+
+
+                        {{-- <div class="navbar-search-block">
                             <form class="form-inline">
                                 <div class="input-group input-group-sm">
                                     <input class="form-control form-control-navbar" type="search" placeholder="Search"
@@ -74,7 +85,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                     </li>
                 </div>
             </ul>
@@ -88,9 +99,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4 mt-3 pb-3 mb-3 d-flex">
             <!-- Logo -->
             <a href="javascript:location.reload(true)" class="brand-link">
-                <img href="dashboard" src="{{ asset('img/logo_jadi.png') }}" alt=" Logo" class="brand-image "
-                    style="opacity: .8">
-                <span class="brand-text font-weight-light">Library</span>
+                <img href="dashboard" src="{{ asset('img/palawa-icon-colored.png') }}" alt=" Logo"
+                    class="brand-image " style="opacity: .8">
+                <span class="brand-text font-weight-light">Palawa</span>
             </a>
 
 
@@ -100,7 +111,7 @@
                 @if (auth()->check() &&
                         auth()->user()->hasRole('1'))
                     <!-- Sidebar user panel (optional) -->
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
                             <a href="profile">
                                 <img src="{{ asset('/img/pp fix.png') }}" class="img-circle elevation-2"
@@ -112,7 +123,7 @@
                                 <a href="profile" class="d-block">{{ Auth()->user()->username }}</a>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- SidebarSearch Form -->
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
@@ -121,8 +132,7 @@
                             <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                             {{-- @if (Auth::user()->role_id == 1) --}}
                             <li class="nav-item">
-                                <a href="/dashboard"
-                                    class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} ">
+                                <a href="/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }} ">
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>
                                         Dashboard
@@ -134,7 +144,7 @@
                             <li class="nav-item">
                                 <a href="/books"
                                     class="nav-link {{ request()->is('books') ? 'active' : '' }} || {{ request()->is('add_books') ? 'active' : '' }} || {{ request()->is('edit_books') ? 'active' : '' }} || {{ request()->is('delete_books') ? 'active' : '' }} || {{ request()->is('deleted_books') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-swatchbook "></i>
+                                    <i class="nav-icon fa-solid fa-car"></i>
                                     <p>
                                         Car Data
                                     </p>
@@ -160,9 +170,10 @@
 
                             <li class="nav-item">
                                 <a href="/book_rent" class="nav-link {{ request()->is('book_rent') ? 'active' : '' }}">
-                                    <i class='nav-icon fas fa-money-bill-wave-alt '></i>
+                                    {{-- <i class='nav-icon fas fa-money-bill-wave-alt '></i> --}}
+                                    <i class=' nav-icon fas fa-arrow-alt-circle-right '></i>
                                     <p>
-                                        Car rental
+                                        Car Rental
                                     </p>
                                 </a>
                             </li>
@@ -171,27 +182,26 @@
                                     class="nav-link {{ request()->is('book_return') ? 'active' : '' }}">
                                     <i class=' nav-icon fas fa-arrow-alt-circle-left '></i>
                                     <p>
-                                        Return Date
+                                        Car Return
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/rent_logs"
-                                    class="nav-link {{ request()->is('rent_logs') ? 'active' : '' }}">
+                                <a href="/rent_logs" class="nav-link {{ request()->is('rent_logs') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-business-time "></i>
                                     <p>
                                         Rent Logs
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="/logout" class="nav-link ">
-                                    <i class="nav-icon fas fa-sign-out-alt "></i>
+                            {{-- <li class="nav-item">
+                                <a href="#" class="nav-link" id="logoutButton">
+                                    <i class="nav-icon fas fa-sign-out-alt"></i>
                                     <p>
                                         Logout
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         @elseif (auth()->check() &&
                                 auth()->user()->hasRole('2'))
                             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -208,8 +218,8 @@
                                 </div>
                             </div>
                             <nav class="mt-2">
-                                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
-                                    role="menu" data-accordion="false">
+                                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                                    data-accordion="false">
                                     <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                                     {{-- @if (Auth::user()->role_id == 1) --}}
                                     <li class="nav-item">
@@ -223,8 +233,8 @@
                                     </li>
                                     {{-- <li class="nav-header">EXAMPLES</li> --}}
                                     <li class="nav-item">
-                                        <a href="/logout" class="nav-link ">
-                                            <i class="nav-icon fas fa-sign-out-alt "></i>
+                                        <a href="#" class="nav-link" id="logoutButton">
+                                            <i class="nav-icon fas fa-sign-out-alt"></i>
                                             <p>
                                                 Logout
                                             </p>
@@ -320,8 +330,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="font-size: 0.8rem;">
-            <strong>Copyright &copy; 2023 <a
-                    href="mailto:galihmahendrastudio.mp@gmail.com">galihmahendrastudio.com</a>.</strong>
+            <strong>Copyright &copy; 2023 <a href="mailto:galihmahendrastudio.mp@gmail.com">Palawa.com</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 {{-- <b>Version</b> 3.2.0 --}}
@@ -373,9 +382,20 @@
     <script>
         $(document).ready(function() {
             $('.select2-multiple').select2();
+        }); <
+        script src = "https://code.jquery.com/jquery-3.7.0.min.js" >
+    </script>
+    <script>
+        // Tambahkan konfirmasi sebelum logout
+        $(document).ready(function() {
+            $('#logoutButton').on('click', function() {
+                if (confirm('Apakah Anda yakin ingin logout?')) {
+                    // Redirect ke halaman logout jika konfirmasi diterima
+                    window.location.href = '/logout';
+                }
+            });
         });
     </script>
-
 
 </body>
 
