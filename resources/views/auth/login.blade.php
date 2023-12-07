@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Library | Login</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/palawa-icon-colored.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
@@ -29,15 +30,25 @@
             margin: 15px;
         }
 
-        body{
+        body {
             background-color: #454d55;
         }
 
         .login-box {
             background-color: #343a40;
-    color: #fff;
-}
+            color: #fff;
+        }
 
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            width: 300px;
+            height: 100px;
+        }
     </style>
     <div class="main d-flex flex-column  justify-content-center align-items-center">
         {{-- @if (session('status'))
@@ -51,6 +62,9 @@
             </div>
         @endif
         <div class="login-box">
+            <div class="logo">
+                <img src="{{ asset('img/palawa-tour-horizontal.png') }}" alt="Company Logo">
+            </div>
             <form action="" method="post">
                 @csrf
                 <div>
@@ -65,12 +79,13 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control" required>
                 </div>
+                <br>
                 <div>
                     <button type="submit" class="btn btn-primary form-control">Login</button>
                 </div>
-                <div class="text-center">
+                {{-- <div class="text-center">
                     Dont Have Account? <a href="register">Sign Up</a>
-                </div>
+                </div> --}}
             </form>
         </div>
 

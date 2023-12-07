@@ -36,7 +36,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="inputcategory">Category</label>
                                     <select name="category_id" class="form-control" id="inputcategory" required>
                                         <option value="" disabled selected>Select Category</option>
@@ -44,7 +44,7 @@
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <label for="inputbook">Book</label>
@@ -52,7 +52,12 @@
                                         id="inputbook" placeholder="Enter Book Title">
                                         <option value="" disabled>Select Book</option>
                                         @foreach ($books as $item)
-                                            <option value="{{ $item->id }}">{{ $item->book_code }} | {{ $item->title }}
+                                            @php
+                                                // Dapatkan nama kategori dari relasi many-to-many
+                                                $categories = $item->categories->pluck('name')->implode(', ');
+                                            @endphp
+                                            <option value="{{ $item->id }}" data-category="{{ $categories }}">
+                                                {{ $item->book_code }} | {{ $item->title }} ({{ $categories }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -78,7 +83,7 @@
             </div>
         </div>
     </section>
-{{-- ini adalah kode terakhir yang work --}}
+    {{-- ini adalah kode terakhir yang work --}}
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -86,6 +91,9 @@
         $(document).ready(function() {
             // Inisialisasi Select2 pada dokumen dimuat
             $('.userbox').select2();
+            $('#inputbook').select2({
+                multiple: true
+            });
 
             // Event ketika kategori berubah
             $('#inputcategory').change(function() {
@@ -96,25 +104,21 @@
                     url: '/books-by-category/' + categoryID,
                     type: 'GET',
                     success: function(data) {
-                        // Simpan referensi ke elemen inputbook
-                        var inputBook = $('#inputbook');
-
-                        // Hancurkan dan hapus Select2 pada elemen inputbook
-                        inputBook.select2('destroy').empty();
+                        // Kosongkan opsi buku yang ada
+                        $('#inputbook').empty();
 
                         // Tambahkan opsi buku baru berdasarkan data yang diterima
                         $.each(data, function(index, book) {
-                            inputBook.append('<option value="' + book.id + '">' +
+                            $('#inputbook').append('<option value="' + book.id + '">' +
                                 book.book_code + ' | ' + book.title + '</option>');
                         });
 
-                        // Inisialisasi kembali Select2 pada elemen inputbook dengan opsi ganda
-                        inputBook.select2({
-                            multiple: true
-                        });
+                        // Trigger event select2:select untuk mempertahankan buku yang dipilih sebelumnya
+                        $('#inputbook').trigger('select2:select');
                     },
                     error: function(error) {
-                        console.error('Error fetching books:', error);
+                        // Tampilkan pesan error
+                        console.error(error);
                     }
                 });
             });

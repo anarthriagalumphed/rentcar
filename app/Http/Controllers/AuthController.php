@@ -31,6 +31,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
             // dd(Auth::user());
+            $request->session()->put('just_logged_in', true);
             if (Auth::user()->role_id == 1) {
                 return redirect('dashboard');
             }
