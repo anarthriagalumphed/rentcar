@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('add_books', [BookController::class, 'add_books']);
         Route::post('add_books', [BookController::class, 'store']);
-        Route::get('edit_books/{slug}', [BookController::class, 'edit_books']);
+        Route::get('edit_books/{slug}', [BookController::class, 'edit_books'])->name('edit_books');
         Route::post('edit_books/{slug}', [BookController::class, 'update_books']);
         Route::get('delete_books/{slug}', [BookController::class, 'delete_books']);
         Route::get('destroy_books/{slug}', [BookController::class, 'destroy_books']);
@@ -76,10 +76,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('add_users', [UsersController::class, 'add_users']);
         Route::post('add_users', [UsersController::class, 'store']);
-        Route::get('edit_users/{slug}', [UsersController::class, 'edit_users']);
-        Route::put('edit_users/{slug}', [UsersController::class, 'update_users']);
+        Route::get('/edit_users/{slug}', [UsersController::class, 'edit_users'])->name('edit_users');;
+        Route::post('/edit_users/{slug}', [UsersController::class, 'update_users']);
         Route::get('registered_users', [UsersController::class, 'registered_users']);
-        Route::get('detail_users/{slug}', [UsersController::class, 'detail_users']);
+        Route::get('detail_users/{slug}', [UsersController::class, 'detail_users'])->name('detail_users');
         Route::get('approve_users/{slug}', [UsersController::class, 'approve_users']);
         Route::get('delete_users/{slug}', [UsersController::class, 'delete_users']);
         Route::get('destroy_users/{slug}', [UsersController::class, 'destroy_users']);
@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::get('price', [BookController::class, 'price']);
         Route::get('add_price', [BookController::class, 'add_price']);
         Route::post('add_price', [BookController::class, 'store_price']);
-
+        Route::get('detail_books/{slug}', [BookController::class, 'detail_books'])->name('detail_books');
         Route::get('book_return', [BookRentController::class, 'book_return']);
         Route::post('book_return', [BookRentController::class, 'returning']);
 

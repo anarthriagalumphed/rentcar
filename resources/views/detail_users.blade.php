@@ -5,7 +5,7 @@
 
 
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -20,9 +20,13 @@
             @endif
 
             @csrf
+
             <a href="/users" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i
-                class="fas fa-arrow-left"></i>
-            Back</a>
+                    class="fas fa-arrow-left"></i>
+                Back</a>
+            <a href="{{ route('edit_users', ['slug' => $user->slug]) }}" class="btn btn-warning btn-sm mb-2"
+                style="margin-right: 10px;"><i class="fas fa-pen"></i>
+                Edit</a>
             <div class="form-group mt-5 w-25 ">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -39,26 +43,21 @@
                 <label>Phone</label>
                 <input type="text" name="phone" placeholder="insert title" id="title" class="form-control" readonly
                     value="{{ $user->phone }}">
-                <label>Status</label>
-                <input type="text" name="phone" placeholder="insert title" id="title" class="form-control" readonly
-                    value="{{ $user->status }}">
-
-
-
                 </select>
-
-
-
                 <div class="text-small text-danger"></div>
                 <br>
+                <label class="form-label">Image</label><br>
+                <div class="w-50">
+                    @if ($user->id_card != '')
+                        <img src="{{ asset('storage/id_card/' . $user->id_card) }}" alt="" width="100%">
+                    @else
+                        <img src="{{ asset('img/pp fix.png') }}" alt="" width="100%">
+                    @endif
+                </div>
+
+                <!-- sini tambah -->
 
             </div>
-
-
-
-
-            <!-- sini tambah -->
-
 
             {{-- <button type="reset" class="btn btn-danger btn-sm"><i class="fa fa-arrow-left"> Reset</i> </button> --}}
         </form>

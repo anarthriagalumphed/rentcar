@@ -46,8 +46,8 @@
         }
 
         .logo img {
-            width: 300px;
-            height: 100px;
+            width: 265px;
+            height: 73px;
         }
     </style>
     <div class="main d-flex flex-column  justify-content-center align-items-center">

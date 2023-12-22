@@ -1,7 +1,7 @@
 @extends('layouts.mainlayout')
 
 
-@section('title', 'Edit books')
+@section('title', 'Detail Books')
 
 
 @section('content')
@@ -10,9 +10,11 @@
     <div>
         <form action="/edit_books/{{ $book->slug }}" method="post" enctype="multipart/form-data">
             @csrf
-            <a href="{{ route('detail_books', ['slug' => $book->slug]) }}" class="btn btn-primary btn-sm mb-2"
-                style="margin-right: 10px;"><i class="fas fa-arrow-left"></i>
+            <a href="/books" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i class="fas fa-arrow-left"></i>
                 Back</a>
+            <a href="{{ route('edit_books', ['slug' => $book->slug]) }}" class="btn btn-warning btn-sm mb-2"
+                style="margin-right: 10px;"><i class="fas fa-pen"></i>
+                Edit</a>
             <div class="form-group mt-5 w-50 " style="margin: auto;">
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -25,13 +27,12 @@
                 @endif
                 <label>Code</label>
                 <input type="text" name="book_code" placeholder="insert code" id="code" class="form-control"
-                    value="{{ $book->book_code }}">
+                    readonly value="{{ $book->book_code }}">
                 <label>Title</label>
-                <input type="text" name="title" placeholder="insert title" id="title" class="form-control"
+                <input type="text" name="title" placeholder="insert title" id="title" class="form-control" readonly
                     value="{{ $book->title }}">
-                <label>Image</label>
-                <input type="file" name="image" placeholder="insert name" id="image" class="form-control">
-                <label class="form-label">Current Image</label><br>
+
+                <label class="form-label">Image</label><br>
                 <div class="w-50">
                     @if ($book->cover != '')
                         <img src="{{ asset('storage/cover/' . $book->cover) }}" alt="" width="100%">
@@ -41,21 +42,21 @@
                 </div>
                 <label>Tahun Keluar</label>
                 <input type="text" name="tahun_keluar" placeholder="insert year" id="tahun_keluar" class="form-control"
-                    value="{{ $book->tahun_keluar }}">
+                    readonly value="{{ $book->tahun_keluar }}">
                 <label>Category</label>
-                <select name="categories[]" id="category" class="form-control select2-multiple" multiple="multiple">
+                {{-- <select name="categories[]" id="category" class="form-control select2-multiple" multiple="multiple">
 
                     @foreach ($categories as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
-                </select>
+                </select> --}}
 
-                <label for="currentCategory" class="form-label">Current Category</label>
+                <label for="currentCategory" class="form-label">Category</label>
 
                 <div>
                     <ul>
                         @foreach ($book->categories as $category)
-                            <li>{{ $category->name }}</li>
+                            {{ $category->name }}
                         @endforeach
                     </ul>
                 </div>
@@ -63,11 +64,11 @@
 
 
                 <label>Harga</label>
-                <input type="text" pattern="[0-9]+" name="price" placeholder="insert price" id="price"
-                    class="form-control" value="{{ $book->price }}">
+                <input type="text" pattern="[0-9]+" name="price" placeholder="price" id="price"
+                    class="form-control" readonly value="Rp{{ $book->price }}">
                 <div class="text-small text-danger"></div>
                 <br>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"> Save</i> </button>
+                {{-- <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"> Save</i> </button> --}}
             </div>
 
 

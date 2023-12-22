@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('nik')->nullable();
             $table->string('phone')->nullable(); //no tlp
+            $table->string('id_card', 255)->nullable();
             $table->text('address')->nullable(); //alamat jika perlu
 
             //nik nama no hp
