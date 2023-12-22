@@ -16,7 +16,7 @@
                     <p>Car</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-swatchbook"></i>
+                    <i class="fas fa-car"></i>
                 </div>
                 <a href="books" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>

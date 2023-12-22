@@ -5,7 +5,7 @@
 
 
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 
     <div>
         <form action="add_books" method="post" enctype="multipart/form-data">
@@ -24,7 +24,7 @@
                 @endif
                 <label>Code</label>
                 <input type="text" name="book_code" placeholder="insert code" id="code" class="form-control"
-                    value="plw-{{ old('book_code') }}">
+                    value="{{ old('book_code') }}">
                 <br>
                 <label>Nama Mobil</label>
                 <input type="text" name="title" placeholder="insert car name" id="title" class="form-control"

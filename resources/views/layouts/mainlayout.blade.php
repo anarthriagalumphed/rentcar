@@ -10,7 +10,7 @@
     <!-- Google Font: Source Sans Pro -->
 
     <link rel="stylesheet"
-        href="{{ asset('template/http://127.0.0.1:8000/template/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
+        href="{{ asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free/css/all.min.css') }}">
@@ -18,12 +18,18 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/adminlte.min.css') }}">
-    <link
-        href="{{ asset('template/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous') }}">
+    {{-- <link rel="stylesheet"
+        href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css') }}"> --}}
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- Dapatkan dari https://fontawesome.com/start -->
     <script src="https://kit.fontawesome.com/2877f6b29f.js" crossorigin="anonymous"></script>
+
+
+
+
+
+
 </head>
 
 
@@ -64,9 +70,10 @@
                 <!-- Navbar Search -->
                 <div class="sidebar-overlay">
                     <li class="nav-item">
-                        <a chref="#" class="nav-link" id="logoutButton">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#logoutModal">
                             <i class="nav-icon fas fa-sign-out-alt"> Logout</i>
                         </a>
+
 
 
 
@@ -337,6 +344,24 @@
             </div>
         </footer>
     </div>
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Are you sure you want to logout?</h5>
+
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#" id="confirmLogout" class="btn btn-primary">Logout</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
@@ -358,44 +383,34 @@
     <!-- ChartJS -->
     <script src="{{ asset('template/plugins/chart.js/Chart.min.js') }}"></script>
 
+    {{-- <script src="{{ asset('template/dist/js/pages/dashboard2.js') }}"></script> --}}
 
-    <!-- AdminLTE for demo purposes -->
-    {{-- <script src="{{ asset('template/dist/js/demo.js') }}"></script> --}}
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    {{-- <script src="{{ asset('template/dist/js/pages/dashboard2.js') }}"></script>
-
-    <script
-        src="{{ asset('template/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"') }}">
-    </script> --}}
-
-
-
-    <script src="{{ asset('template/http://127.0.0.1:8000/template/dist/js/pages/dashboard2.js') }}"></script>
-
-    <script
-        src="{{ asset('template/http://127.0.0.1:8000/template/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js integrity=&quot;sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N&quot; crossorigin=&quot;anonymous&quot;') }}">
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js') }}">
     </script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.select2-multiple').select2();
-        }); <
-        script src = "https://code.jquery.com/jquery-3.7.0.min.js" >
+        });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Tambahkan konfirmasi sebelum logout
         $(document).ready(function() {
+            // Menampilkan modal saat tombol Logout ditekan
             $('#logoutButton').on('click', function() {
-                if (confirm('Apakah Anda yakin ingin logout?')) {
-                    // Redirect ke halaman logout jika konfirmasi diterima
-                    window.location.href = '/logout';
-                }
+                $('#logoutModal').modal('show');
+            });
+
+            // Redirect setelah Logout di-konfirmasi
+            $('#confirmLogout').on('click', function() {
+                window.location.href = '/logout'; // Ganti dengan URL logout sesuai dengan kebutuhan Anda
             });
         });
     </script>
+
 
 </body>
 

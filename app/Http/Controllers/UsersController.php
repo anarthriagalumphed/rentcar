@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\User;
 use App\Models\RentLogs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -27,22 +29,12 @@ class UsersController extends Controller
 
     public function detail_users($slug)
     {
-
+        $book = Book::where('slug', $slug)->first();
         $user = User::where('slug', $slug)->first();
         $rentlogs = RentLogs::with(['user', 'book'])->where('user_id', $user->id)->get();
-        return view('detail_users', ['user' => $user, 'rent_logs' => $rentlogs]);
+        return view('detail_users', ['user' => $user, 'rent_logs' => $rentlogs,  'book' => $book]);
     }
 
-
-
-    // public function approve_users($slug)
-    // {
-
-    //     $user = User::where('slug', $slug)->first();
-    //     $user->status = 'active';
-    //     $user->save();
-    //     return redirect('/detail_users/' . $slug)->with('status', 'user active');
-    // }
 
     public function delete_users($slug)
     {
@@ -55,7 +47,11 @@ class UsersController extends Controller
     public function destroy_users($slug)
     {
         $user = User::where('slug', $slug)->first();
-        $user->delete();
+        // $user->delete();
+        if ($user->id_card) {
+            Storage::delete('id_card/' . $user->id_card);
+        }
+        $user->forceDelete();
         return redirect('users')->with('status', 'user deleted');
     }
 
@@ -92,10 +88,16 @@ class UsersController extends Controller
         $validated = $request->validate([
             'username' => 'max:100',
             'nik' => 'max:16',
-            'phone' => 'max:16'
+            'phone' => 'max:16',
+
         ]);
-
-
+        $newName = '';
+        if ($request->file('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $newName = $request->username . '-' . now()->timestamp . '.' . $extension;
+            $request->file('image')->storeAs('id_card', $newName);
+        }
+        $request['id_card'] = $newName;
         $user = User::create($request->all());
         return redirect('users')->with('status', 'user added');
     }
@@ -116,34 +118,52 @@ class UsersController extends Controller
 
     public function update_users(Request $request, $slug)
     {
-        $user = User::where('slug', $slug)->first();
 
+        $user = User::where('slug', $slug)->first();
         // Validasi hanya jika ada perubahan pada username, nik, atau phone
         $validationRules = [
-            'username' => 'max:100',
-            'nik' => 'max:16',
-            'phone' => 'max:16',
+            'username' => 'max:100' . $user->id,
+            'nik' => 'max:16' . $user->id,
+            'phone' => 'max:16' . $user->id,
+
         ];
 
         // Periksa apakah ada perubahan pada username
         if ($request->username != $user->username) {
             $validationRules['username'] .= '|unique:users';
         }
-
         // Periksa apakah ada perubahan pada nik
         if ($request->nik != $user->nik) {
             $validationRules['nik'] .= '|unique:users';
         }
-
         // Periksa apakah ada perubahan pada phone
         if ($request->phone != $user->phone) {
             $validationRules['phone'] .= '|unique:users';
         }
-
-        $validated = $request->validate($validationRules);
-
         $user->slug = null;
         $user->update($request->all());
+
+
+        if ($request->file('image')) {
+            // Hapus gambar lama
+            if ($user->id_card) {
+                Storage::delete('id_card/' . $user->id_card);
+            }
+
+            // Upload gambar baru
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $newName = $request->username . '-' . now()->timestamp . '.' . $extension;
+            $request->file('image')->storeAs('id_card', $newName);
+
+            $request['id_card'] = $newName;
+        }
+
+
+        $user = User::where('slug', $slug)->first();
+        $user->update($request->all());
+        // $validated = $request->validate($validationRules);
+
+
 
         return redirect('users')->with('status', 'user updated');
     }

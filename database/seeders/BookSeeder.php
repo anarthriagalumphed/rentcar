@@ -25,7 +25,7 @@ class BookSeeder extends Seeder
             'pendapatan' => '',
             'durasi_sewa' => '2000 jam',
             'keterangan' => 'apa bjir',
-            'status' => ''
+            'status' => 'in stock'
 
         ]);
     }
