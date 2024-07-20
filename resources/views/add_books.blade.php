@@ -1,7 +1,7 @@
 @extends('layouts.mainlayout')
 
 
-@section('title', 'Add car')
+@section('title', 'Add Car')
 
 
 @section('content')

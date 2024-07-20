@@ -1,7 +1,7 @@
 @extends('layouts.mainlayout')
 
 
-@section('title', 'Detail Books')
+@section('title', 'Detail Car')
 
 
 @section('content')

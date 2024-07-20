@@ -7,6 +7,8 @@
     <div class="card-body">
         <table id="example1" class="table table-bordered table-striped">
 
+            <a href="#" class="btn btn-success btn-sm mb-2" style="margin-right: 10px;"><i>Rekap</i></a>
+            <br>
             <tr>
                 <th>No</th>
                 <th>User</th>
@@ -23,8 +25,8 @@
             <tbody>
 
                 @foreach ($rentlog as $item)
-                    <tr
-                        class="{{ $item->actual_return_date == null ? '' : ($item->return_date < $item->actual_return_date ? 'bg-danger' : 'bg-success') }}">
+                    <tr class="{{ $item->actual_return_date == null ? '' : ($item->return_date < $item->actual_return_date ? 'bg-danger' : 'bg-success') }}"
+                        style="opacity: 0.7;">
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             @if ($item->user)

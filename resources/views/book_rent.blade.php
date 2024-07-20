@@ -1,6 +1,6 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Book Rent')
+@section('title', 'Car Rent')
 
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
@@ -17,7 +17,7 @@
                     <!-- general form elements -->
                     <div class="card card-white">
                         <div class="card-header">
-                            <h3 class="card-title">Book Rent</h3>
+                            <h3 class="card-title">Car Rent</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -47,10 +47,10 @@
                                 </div> --}}
 
                                 <div class="form-group">
-                                    <label for="inputbook">Book</label>
+                                    <label for="inputbook">Car</label>
                                     <select name="book_ids[]" class="form-control select2-multiple" multiple="multiple"
                                         id="inputbook" placeholder="Enter Book Title">
-                                        <option value="" disabled>Select Book</option>
+                                        <option value="" disabled>Select Car</option>
                                         @foreach ($books as $item)
                                             @php
                                                 // Dapatkan nama kategori dari relasi many-to-many

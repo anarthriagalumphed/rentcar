@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <br> --}}
-                <a href="add_books" class="btn btn-primary btn-sm mb-2" style="margin-right: 10px;"><i class="fas fa-plus"></i>
+                <a href="add_books" class="btn btn-success btn-sm mb-2" style="margin-right: 10px;"><i class="fas fa-plus"></i>
                     Add
                     Cars</a>
                 {{-- <a href="deleted_books" class="btn btn-warning btn-sm mb-2" style="margin-right: 10px;"><i
