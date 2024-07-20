@@ -1,6 +1,6 @@
 @extends('layouts.mainlayout')
 
-@section('title', 'Book Return')
+@section('title', 'Car Return')
 
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
@@ -17,7 +17,7 @@
                     <!-- general form elements -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Book Return</h3>
+                            <h3 class="card-title">Car Return</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
